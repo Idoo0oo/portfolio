@@ -59,7 +59,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         rotateY,
         transformStyle: "preserve-3d", // Penting untuk efek 3D
       }}
-      className="relative w-full max-w-sm h-[450px] rounded-2xl bg-[var(--color-panel)] border border-white/10 overflow-hidden cursor-pointer group flex-shrink-0"
+      className="relative w-full max-w-sm h-[450px] rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden cursor-pointer group flex-shrink-0"
     >
       {/* Gambar Proyek dengan efek Parallax Zoom saat di-hover */}
       <div 
@@ -68,24 +68,24 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       />
       
       {/* Overlay Gradien Gelap agar teks terbaca */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg-dark)] via-black/50 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
       {/* Konten Teks */}
       <div 
-        className="absolute inset-0 p-6 flex flex-col justify-end"
+        className="absolute inset-0 p-8 flex flex-col justify-end"
         style={{ transform: "translateZ(50px)" }} // Membuat teks seolah melayang di atas gambar
       >
         <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-[var(--color-neon)] transition-colors">
           {project.title}
         </h3>
-        <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+        <p className="text-gray-300 text-sm mb-6 line-clamp-3 leading-relaxed">
           {project.description}
         </p>
         
         {/* Label Teknologi */}
         <div className="flex flex-wrap gap-2">
           {project.tech.map((tech, i) => (
-            <span key={i} className="px-2 py-1 text-xs font-mono text-[var(--color-neon)] bg-white/5 backdrop-blur-md rounded border border-white/10">
+            <span key={i} className="px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider text-[var(--color-neon)] bg-white/10 rounded-md border border-white/5">
               {tech}
             </span>
           ))}
@@ -93,7 +93,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
       
       {/* Efek Glow tambahan saat di-hover */}
-      <div className="absolute inset-0 rounded-2xl border-2 border-[var(--color-neon)] opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
+      <div className="absolute inset-0 rounded-3xl border-2 border-[var(--color-neon)] opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
     </motion.div>
   );
 }

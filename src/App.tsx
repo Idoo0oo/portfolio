@@ -1,75 +1,140 @@
-import { ReactLenis } from 'lenis/react';
-import { AnimatePresence, motion, useScroll, useSpring } from 'motion/react'; // Tambahkan useScroll & useSpring
+import { AnimatePresence, motion } from 'framer-motion';
 import { Toaster } from 'sonner';
 
-import LoadingScreen from './components/LoadingScreen';
-import CustomCursor from './components/CustomCursor';
-import Navbar from './components/Navbar'; // Tambahkan impor Navbar
-import Hero from './sections/Hero';
-import Showcase from './sections/Showcase';
-import CaseStudy from './sections/CaseStudy';
-import Contact from './sections/Contact';
-import DeveloperOS from './sections/DeveloperOS';
-import { useAppStore } from './store/useAppStore';
-import MagneticButton from './components/MagneticButton';
-import AboutGrid from './sections/AboutGrid';
+import BootScreen from './components/os/BootScreen';
+import Desktop from './components/os/Desktop';
+import Window from './components/os/Window';
+import Terminal from './components/os/Terminal';
+
+import { useOSStore } from './store/useOSStore';
+import Spotlight from './components/os/Spotlight';
+import { useEffect, useState } from 'react';
+import { useSound } from './hooks/useSound';
+
+// Components (OS Environment)
+import AboutThisMac from './components/os/AboutThisMac';
+import Finder from './components/os/Finder';
+import Notes from './components/os/Notes';
+import Mail from './components/os/Mail';
+import Preview from './components/os/Preview';
+import MobileFallback from './components/MobileFallback';
 
 function App() {
-  const { isLoading, isDevMode, toggleDevMode } = useAppStore();
-  
-  // Logika untuk Scroll Progress Bar
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  const { isBooted, isDarkMode, openApps, toggleSpotlight } = useOSStore();
+  const { playSound } = useSound();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        toggleSpotlight();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [toggleSpotlight]);
+
+  useEffect(() => {
+    const handleGlobalClick = () => {
+      playSound('click', 0.4);
+    };
+
+    window.addEventListener('click', handleGlobalClick);
+    return () => window.removeEventListener('click', handleGlobalClick);
+  }, [playSound]);
+
+  useEffect(() => {
+    if (isBooted) {
+      playSound('chime', 0.8);
+    }
+  }, [isBooted, playSound]);
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const renderAppContent = (id: string) => {
+    switch (id) {
+      case 'terminal': return <Terminal />;
+      case 'about': return <AboutThisMac />;
+      case 'projects': return <Finder />;
+      case 'experience': return <Notes />;
+      case 'contact': return <Mail />;
+      case 'preview': return <Preview />;
+      case 'settings': return <div className="bg-[#050505] text-white/90 p-8 h-full font-mono text-sm leading-relaxed">
+        <p className="text-[var(--color-neon)] font-bold mb-4 uppercase tracking-widest">System Settings</p>
+        <div className="space-y-2 opacity-60">
+          <p>► Version: 2.0.0-cinematic</p>
+          <p>► Environment: Production</p>
+          <p>► Module: Settings UI</p>
+          <p className="pt-4 animate-pulse">Status: Implementation in progress...</p>
+        </div>
+      </div>;
+      default: return null;
+    }
+  };
+
+  const getAppTitle = (id: string) => {
+    switch (id) {
+      case 'terminal': return 'terminal — zsh — 80×24';
+      case 'about': return 'About Me';
+      case 'projects': return 'Projects — Finder';
+      case 'experience': return 'Notes — Experience';
+      case 'contact': return 'Mail — Compose New';
+      case 'preview': return 'Preview — cv-muhammad-ditto.pdf';
+      default: return id.charAt(0).toUpperCase() + id.slice(1);
+    }
+  };
+
+  if (isMobile) {
+    return <MobileFallback />;
+  }
 
   return (
-    <ReactLenis root>
-      <CustomCursor />
-      <Toaster position="bottom-right" /> 
-
-      {/* Garis Progres Scroll di Paling Atas */}
-      <motion.div 
-        className="fixed top-0 left-0 right-0 h-1 bg-[var(--color-neon)] origin-left z-50 shadow-[0_0_10px_var(--color-neon)]"
-        style={{ scaleX }}
-      />
+    <div className="h-screen w-full bg-black overflow-hidden select-none">
+      <Toaster position="bottom-right" theme={isDarkMode ? "dark" : "light"} /> 
+      
+      {/* Spotlight Overlay */}
+      <Spotlight />
 
       <AnimatePresence mode="wait">
-        {isLoading && <LoadingScreen key="loading" />}
+        {!isBooted ? (
+          <BootScreen key="boot" />
+        ) : (
+          <motion.div
+            key="desktop-v2"
+            initial={{ opacity: 0, filter: "blur(20px)", scale: 0.98 }}
+            animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+            transition={{ 
+              duration: 2.5, 
+              ease: [0.22, 1, 0.36, 1],
+              delay: 0.3 
+            }}
+            className="h-full w-full"
+          >
+            <Desktop key="desktop">
+              {openApps.map((appId) => (
+                <Window 
+                  key={appId} 
+                  id={appId as any} 
+                  title={getAppTitle(appId)}
+                >
+                  {renderAppContent(appId)}
+                </Window>
+              ))}
+              
+              {/* Global Overlays */}
+            </Desktop>
+          </motion.div>
+        )}
       </AnimatePresence>
-
-      {!isLoading && (
-        <main className="relative min-h-screen flex flex-col items-center bg-[#0a0a0a]">
-          
-          <div className="absolute top-6 left-1/2 -translate-x-1/2 md:top-8 md:right-8 md:left-auto md:translate-x-0 z-50">
-            <MagneticButton>
-              <button 
-                onClick={toggleDevMode}
-                className="px-5 py-2 bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 rounded-full text-xs md:text-sm font-mono text-[var(--color-neon)] hover:bg-white/10 hover:border-[var(--color-neon)] transition-all cursor-pointer shadow-[0_0_10px_rgba(0,0,0,0.5)] whitespace-nowrap"
-              >
-                {isDevMode ? "Exit Dev Mode" : "Developer Mode"}
-              </button>
-            </MagneticButton>
-          </div>
-
-          {isDevMode ? (
-            <DeveloperOS />
-          ) : (
-            <div className="w-full">
-              {/* Pasang Navbar di sini */}
-              <Navbar /> 
-              <Hero />
-              <Showcase />
-              <AboutGrid />
-              <CaseStudy />
-              <Contact />
-            </div>
-          )}
-        </main>
-      )}
-    </ReactLenis>
+    </div>
   );
 }
 

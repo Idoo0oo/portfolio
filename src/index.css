@@ -4,50 +4,97 @@
   --color-neon: #00ff9d;
   --color-bg-dark: #0a0a0a;
   --color-panel: rgba(20, 20, 20, 0.7);
+  
+  /* macOS Theme Colors */
+  --color-mac-bg: rgba(25, 25, 25, 0.4);
+  --color-mac-border: rgba(255, 255, 255, 0.1);
+  --color-mac-text: #ffffff;
+  --color-mac-text-dim: rgba(255, 255, 255, 0.5);
+  
+  /* Traffic Lights */
+  --color-mac-close: #ff5f56;
+  --color-mac-minimize: #ffbd2e;
+  --color-mac-maximize: #27c93f;
 }
 
 body {
   background-color: var(--color-bg-dark);
   color: white;
   margin: 0;
-  overflow-x: hidden;
-  font-family: 'Inter', system-ui, sans-serif;
+  overflow: hidden; /* macOS desktop shouldn't scroll the body */
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Menyembunyikan scrollbar bawaan untuk tampilan sinematik */
+/* Glassmorphism Utilities - Reduced blur for performance */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  will-change: backdrop-filter, transform;
+}
+
+/* macOS Scrollbar */
 ::-webkit-scrollbar {
-  display: none;
+  width: 8px;
+  height: 8px;
 }
 
-/* Efek Vignette (Bayangan gelap di pinggir layar untuk fokus ke tengah) */
-body::before {
-  content: "";
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Vignette & Grain */
+.vignette {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.8) 150%);
+  background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.4) 150%);
   pointer-events: none;
-  z-index: 40; /* Di bawah Dev Mode & Cursor, tapi di atas konten */
+  z-index: 100;
 }
 
-/* Efek Film Grain (Tekstur kasar sinematik) */
-body::after {
-  content: "";
+.grain {
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.04; /* Sangat tipis, hanya untuk tekstur */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.02;
   pointer-events: none;
-  z-index: 40;
+  z-index: 101;
 }
 
-/* Menyembunyikan kursor asli (hanya di desktop) untuk diganti dengan kursor kustom kita */
+/* Animations */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 4s linear infinite;
+}
+
+/* Custom Cursor (Keep if cinematic, but more subtle) */
 @media (hover: hover) and (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
-}
-
-html {
-  /* Membantu sinkronisasi animasi dengan scroll */
-  scroll-behavior: auto !important; 
+  /* Commenting out original as we might want a standard cursor for OS feel, 
+     but keeping the option open for custom cursor components */
+  /* * { cursor: none !important; } */
 }
