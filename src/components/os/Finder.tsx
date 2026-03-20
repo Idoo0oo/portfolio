@@ -35,14 +35,34 @@ export default function Finder() {
   ];
 
   const filteredProjects = projects.filter(project => {
+    // 1. Search filter
     const q = searchQuery.toLowerCase();
     const matchesSearch = (
       project.title.toLowerCase().includes(q) ||
       project.description.toLowerCase().includes(q) ||
       project.tech.some(t => t.toLowerCase().includes(q))
     );
-    // In a real app, you'd filter by category too
-    return matchesSearch;
+    if (!matchesSearch) return false;
+
+    // 2. Category filter
+    if (selectedCategory === 'All Projects') return true;
+    if (selectedCategory === 'Starred') return project.isStarred;
+    if (selectedCategory === 'Recents') {
+      // Show projects from 2026 or the 3 most recent
+      const projectDate = new Date(project.date);
+      const isRecent = projectDate.getFullYear() >= 2026;
+      return isRecent;
+    }
+    if (selectedCategory === 'Web Apps') return project.category === 'Web App';
+    if (selectedCategory === 'Mobile Apps') return project.category === 'Mobile App';
+
+    return true;
+  }).sort((a, b) => {
+    // For Recents, sort by date descending
+    if (selectedCategory === 'Recents') {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    }
+    return 0;
   });
 
   return (
@@ -172,10 +192,15 @@ export default function Finder() {
                       key={project.id}
                       onClick={() => setSelectedProject(project)}
                       className={cn(
-                        "hover:bg-white/[0.04] cursor-pointer transition-colors group",
-                        selectedProject?.id === project.id && "bg-blue-500/10 hover:bg-blue-500/20"
+                        "hover:bg-white/[0.02] cursor-pointer transition-colors group relative",
+                        selectedProject?.id === project.id 
+                          ? "bg-[var(--color-accent)]/10" 
+                          : "hover:bg-white/[0.02]"
                       )}
                     >
+                      {selectedProject?.id === project.id && (
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--color-accent)] shadow-[2px_0_10px_var(--color-accent-glow)]" />
+                      )}
                       <td className="py-2 pl-2 flex items-center gap-2">
                         <Folder size={16} className="text-blue-500/70" />
                         <span className="text-white/90">{project.title}</span>
@@ -205,46 +230,48 @@ export default function Finder() {
             exit={{ x: 300, opacity: 0 }}
             className="w-64 h-full bg-white/5 backdrop-blur-xl border-l border-white/5 p-4 flex flex-col gap-6"
           >
-            <div className="flex flex-col items-center gap-4 text-center">
-               <div className="w-24 h-24 bg-white/5 rounded-xl border border-white/10 p-2 flex items-center justify-center relative overflow-hidden group/img">
-                 <img src={selectedProject.image} alt="" className="w-full h-full object-cover rounded-lg group-hover/img:scale-110 transition-transform duration-500" />
-                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
-                    <ArrowUpRight size={24} className="text-white" />
+            <div className="flex-1 overflow-y-auto pr-1 -mr-2 scrollbar-thin scrollbar-thumb-white/10 hover:scrollbar-thumb-white/20">
+              <div className="flex flex-col items-center gap-4 text-center mb-6">
+                 <div className="w-24 h-24 bg-white/5 rounded-xl border border-white/10 p-2 flex items-center justify-center relative overflow-hidden group/img shrink-0">
+                   <img src={selectedProject.image} alt="" className="w-full h-full object-cover rounded-lg group-hover/img:scale-110 transition-transform duration-500" />
+                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
+                      <ArrowUpRight size={24} className="text-white" />
+                   </div>
                  </div>
-               </div>
-               <div>
-                  <h3 className="text-sm font-bold text-white line-clamp-1">{selectedProject.title}</h3>
-                  <p className="text-[10px] text-white/40 italic">Portfolio Project • 6.4 MB</p>
-               </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-white/30 uppercase tracking-wider">Description</span>
-                <p className="text-[12px] text-white/70 leading-relaxed line-clamp-4">
-                  {selectedProject.description}
-                </p>
+                 <div>
+                    <h3 className="text-sm font-bold text-white line-clamp-1">{selectedProject.title}</h3>
+                    <p className="text-[10px] text-white/40 italic">Portfolio Project • 6.4 MB</p>
+                 </div>
               </div>
-
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-white/30 uppercase tracking-wider">Technology Stack</span>
-                <div className="flex flex-wrap gap-1 mt-1">
-                  {selectedProject.tech.map(tag => (
-                    <span key={tag} className="px-1.5 py-0.5 bg-white/5 rounded border border-white/5 text-[9px] text-white/60">
-                      {tag}
-                    </span>
-                  ))}
+  
+              <div className="space-y-4 pb-4">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold text-white/30 uppercase tracking-wider">Description</span>
+                  <p className="text-[12px] text-white/70 leading-relaxed line-clamp-4">
+                    {selectedProject.description}
+                  </p>
+                </div>
+  
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold text-white/30 uppercase tracking-wider">Technology Stack</span>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {selectedProject.tech.map(tag => (
+                      <span key={tag} className="px-1.5 py-0.5 bg-white/5 rounded border border-white/5 text-[9px] text-white/60">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-auto flex flex-col gap-2">
+            <div className="mt-auto pt-4 flex flex-col gap-2 border-t border-white/5 pb-2">
               <div className="flex gap-2">
                 <a 
                   href={selectedProject.github} 
                   target="_blank" 
                   rel="noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-md text-[11px] font-bold transition-colors"
+                  className="flex-1 flex items-center justify-center gap-2 py-1.5 bg-[var(--color-accent)] hover:brightness-110 text-white rounded-md text-[11px] font-bold transition-all"
                   title="View Source on GitHub"
                 >
                   Repo <ArrowUpRight size={12} />

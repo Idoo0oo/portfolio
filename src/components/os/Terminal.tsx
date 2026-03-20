@@ -21,7 +21,7 @@ function Neofetch() {
     ? `${uptimeSecs}s`
     : `${Math.floor(uptimeSecs / 60)}m ${uptimeSecs % 60}s`;
 
-  const neon = "text-[var(--color-neon)]";
+  const neon = "text-[var(--color-accent)]";
 
   return (
     <div className="flex gap-8 my-1 font-mono text-[11px]">
@@ -66,7 +66,7 @@ function Neofetch() {
         <p className="text-white/20 text-[10px]">─────────────────────────</p>
         {/* Color Palette */}
         <div className="flex gap-1 pt-0.5">
-          {["bg-black","bg-zinc-700","bg-zinc-500","bg-white","bg-[var(--color-neon)]","bg-blue-500","bg-orange-400","bg-rose-500"].map(c => (
+          {["bg-black","bg-zinc-700","bg-zinc-500","bg-white","bg-[var(--color-accent)]","bg-blue-500","bg-orange-400","bg-rose-500"].map(c => (
             <span key={c} className={`inline-block w-3 h-3 rounded-sm ${c}`} />
           ))}
         </div>
@@ -84,19 +84,21 @@ export default function Terminal() {
       command: "",
       output: (
         <span className="text-white/50 text-[11px]">
-          Welcome to <span className="text-[var(--color-neon)]">macOS Cinematic Portfolio</span> v2.0{"\n"}
+          Welcome to <span className="text-[var(--color-accent)]">macOS Cinematic Portfolio</span> v2.0{"\n"}
           Type <span className="text-white">'help'</span> for available commands, or{" "}
           <span className="text-white">'neofetch'</span> for system info.
         </span>
       )
     }
   ]);
-  const endRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { openApp, closeApp } = useOSStore();
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
   }, [history]);
 
   const focusInput = () => inputRef.current?.focus();
@@ -126,7 +128,7 @@ export default function Terminal() {
       case "help":
         output = (
           <div className="space-y-0.5 text-[11px]">
-            <p className="text-[var(--color-neon)] font-bold mb-1">Available commands:</p>
+            <p className="text-[var(--color-accent)] font-bold mb-1">Available commands:</p>
             {[
               ["neofetch",   "System information & skills"],
               ["about",      "Open About Me window"],
@@ -158,7 +160,7 @@ export default function Terminal() {
           <div className="text-[11px] space-y-0.5">
             {Object.entries(SKILLS).map(([cat, skills]) => (
               <p key={cat}>
-                <span className="text-[var(--color-neon)] w-14 inline-block">{cat}</span>
+                <span className="text-[var(--color-accent)] w-14 inline-block">{cat}</span>
                 <span className="text-white/70"> {skills.join("  ·  ")}</span>
               </p>
             ))}
@@ -209,10 +211,10 @@ export default function Terminal() {
 
   return (
     <div
-      className="font-mono text-xs text-gray-300 h-full flex flex-col p-3 bg-[#050505] overflow-hidden"
+      className="font-mono text-xs text-gray-300 h-full max-h-full flex flex-col p-3 bg-[#050505] overflow-hidden"
       onClick={focusInput}
     >
-      <div className="flex-1 overflow-y-auto custom-scrollbar pr-1">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto min-h-0 custom-scrollbar pr-1">
         {history.map((item, index) => (
           <div key={index} className="mb-2 whitespace-pre-wrap">
             {item.command && (
@@ -224,10 +226,9 @@ export default function Terminal() {
             <div className="text-gray-400 leading-relaxed">{item.output}</div>
           </div>
         ))}
-        <div ref={endRef} />
       </div>
 
-      <div className="flex text-[var(--color-neon)] mt-2 border-t border-white/5 pt-2">
+      <div className="flex text-[var(--color-accent)] mt-2 border-t border-white/5 pt-2">
         <span className="mr-2 opacity-60 shrink-0">guest@ido-mac:~$</span>
         <input
           ref={inputRef}
@@ -235,7 +236,7 @@ export default function Terminal() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleCommand}
-          className="flex-1 bg-transparent outline-none border-none text-white caret-[var(--color-neon)]"
+          className="flex-1 bg-transparent outline-none border-none text-white caret-[var(--color-accent)]"
           autoFocus
           spellCheck="false"
           autoComplete="off"

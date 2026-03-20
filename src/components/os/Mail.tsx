@@ -12,7 +12,8 @@ import {
   SquarePen,
   Github,
   Linkedin,
-  Instagram
+  Instagram,
+  Plus
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "../../lib/utils";
@@ -109,6 +110,13 @@ export default function Mail() {
             ))}
           </div>
         </div>
+        {/* Compose Button */}
+        <div className="p-4">
+          <button className="w-full py-2 bg-[var(--color-accent)] hover:brightness-110 text-white rounded-lg flex items-center justify-center gap-2 text-sm font-semibold transition-all shadow-lg shadow-[var(--color-accent-glow)]">
+            <Plus size={16} />
+            Compose
+          </button>
+        </div>
       </aside>
 
       {/* 2. Main Area (Composer View) */}
@@ -135,7 +143,7 @@ export default function Mail() {
                  "flex items-center gap-2 px-4 py-1.5 rounded-md text-[13px] font-bold transition-all",
                  isSuccess 
                    ? "bg-green-600/20 text-green-400" 
-                   : "bg-blue-600 hover:bg-blue-500 text-white disabled:opacity-50"
+                   : "bg-[var(--color-accent)] hover:brightness-110 text-white disabled:opacity-50 shadow-lg shadow-[var(--color-accent-glow)]" // Applied accent color
                )}
              >
                {isSubmitting ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}

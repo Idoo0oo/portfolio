@@ -33,7 +33,7 @@ export default function MacOSDock() {
   const openApp = useOSStore((state) => state.openApp);
   const openApps = useOSStore((state) => state.openApps);
   const maximizedApps = useOSStore((state) => state.maximizedApps);
-  const toggleLaunchpad = useOSStore((state) => state.toggleLaunchpad);
+  const toggleDashboard = useOSStore((state) => state.toggleDashboard);
   const toggleSpotlight = useOSStore((state) => state.toggleSpotlight);
   const { playSound } = useSound();
   const [bouncingApp, setBouncingApp] = useState<string | null>(null);
@@ -41,11 +41,11 @@ export default function MacOSDock() {
 
   const isAnyAppMaximized = maximizedApps.length > 0;
 
-  const handleClick = (id: AppId | 'launchpad' | 'spotlight') => {
+  const handleClick = (id: AppId | 'dashboard' | 'spotlight') => {
     setBouncingApp(id);
     playSound('click', 0.5);
     setTimeout(() => setBouncingApp(null), 700);
-    if (id === 'launchpad') toggleLaunchpad();
+    if (id === 'dashboard') toggleDashboard();
     else if (id === 'spotlight') toggleSpotlight();
     else openApp(id);
   };
@@ -76,17 +76,17 @@ export default function MacOSDock() {
         iconMagnification={70}
         iconDistance={140}
       >
-        {/* Launchpad */}
+        {/* Dashboard */}
         <MagicDockIcon className="relative group">
           <motion.div
-            onClick={() => handleClick('launchpad')}
+            onClick={() => handleClick('dashboard')}
             onMouseEnter={() => playSound('hover', 0.2)}
-            animate={bouncingApp === 'launchpad' ? bounceAnimate : {}}
-            transition={bouncingApp === 'launchpad' ? bounceTransition : undefined}
+            animate={bouncingApp === 'dashboard' ? bounceAnimate : {}}
+            transition={bouncingApp === 'dashboard' ? bounceTransition : undefined}
             className="w-full h-full rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center cursor-pointer shadow-lg hover:brightness-110 transition-all duration-200"
           >
             <LayoutGrid size={24} className="text-white" />
-            {tooltip('Launchpad')}
+            {tooltip('Dashboard')}
           </motion.div>
         </MagicDockIcon>
 

@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Wifi, Battery, Search, LayoutGrid, Sun, Moon, Volume2, VolumeX } from "lucide-react";
+import { 
+  Wifi, 
+  Battery, 
+  Search, 
+  LayoutGrid, 
+  Sun, 
+  Moon, 
+  Volume2, 
+  VolumeX 
+} from "lucide-react";
 import { useOSStore } from "../../store/useOSStore";
 import AppleLogo from "./AppleLogo";
 import { cn } from "../../lib/utils";
@@ -13,10 +22,10 @@ export default function MenuBar() {
     toggleDarkMode,
     isSoundEnabled,
     toggleSound,
-    openApp,
     toggleSpotlight,
-    toggleLaunchpad,
-    toggleWidgets
+    toggleDashboard,
+    toggleWidgets,
+    isWidgetsOpen,
   } = useOSStore();
 
   useEffect(() => {
@@ -28,32 +37,31 @@ export default function MenuBar() {
     const options: Intl.DateTimeFormatOptions = {
       weekday: 'short',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
+      year: 'numeric'
     };
-    return date.toLocaleDateString('en-US', options);
-  };
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-US', {
+    const dateStr = date.toLocaleDateString('en-US', options);
+    const timeStr = date.toLocaleTimeString('en-US', {
       hour: 'numeric',
       minute: '2-digit',
       hour12: true
     });
+    return `${dateStr}, ${timeStr}`;
   };
 
   const appTitle = focusedApp ? (focusedApp === 'about' ? 'Mac' : focusedApp.charAt(0).toUpperCase() + focusedApp.slice(1)) : "Finder";
 
   return (
     <div className={cn(
-      "fixed top-0 left-0 right-0 h-8 flex items-center justify-between px-4 z-[500] text-[12px] font-medium shadow-sm border-b transition-colors duration-300",
+      "fixed top-0 left-0 right-0 h-8 flex items-center justify-between px-4 z-[500] text-[12px] font-medium shadow-sm border-b transition-all duration-300",
       isDarkMode
-        ? "glass-dark text-white/90 border-white/5"
-        : "bg-white/20 backdrop-blur-xl text-black/90 border-black/10"
+        ? cn("glass-dark border-white/5", isWidgetsOpen ? "text-white bg-black/80" : "text-white/90")
+        : cn("bg-white/40 backdrop-blur-3xl border-black/10", isWidgetsOpen ? "text-zinc-950 bg-white/40 shadow-md" : "text-zinc-800")
     )}>
       {/* Left Side */}
       <div className="flex items-center space-x-1">
         <div
-          onClick={() => openApp('about')}
+          onClick={() => useOSStore.getState().openApp('about')}
           className="px-3 hover:bg-white/10 rounded cursor-pointer transition-colors duration-100 py-1"
         >
           <AppleLogo size={14} />
@@ -122,15 +130,17 @@ export default function MenuBar() {
               </motion.div>
             </AnimatePresence>
           </button>
+          
           <Wifi size={14} className="hover:bg-white/10 rounded cursor-pointer p-1 transition-colors duration-100" />
           <Battery size={14} className="rotate-90 hover:bg-white/10 rounded cursor-pointer p-1 transition-colors duration-100" />
+          
           <Search
             onClick={toggleSpotlight}
             size={14}
             className="hover:bg-white/10 rounded cursor-pointer p-1 transition-colors duration-100"
           />
           <LayoutGrid
-            onClick={toggleLaunchpad}
+            onClick={toggleDashboard}
             size={14}
             className="hover:bg-white/10 rounded cursor-pointer p-1 transition-colors duration-100"
           />
@@ -140,7 +150,6 @@ export default function MenuBar() {
           className="flex items-center space-x-2 px-2 hover:bg-white/10 rounded cursor-pointer transition-colors duration-100 py-1 active:bg-white/20"
         >
           <span>{formatDate(time)}</span>
-          <span className="hidden xs:inline">{formatTime(time)}</span>
         </div>
       </div>
     </div>

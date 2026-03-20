@@ -1,14 +1,17 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useOSStore } from '../../store/useOSStore';
+import { cn } from "../../lib/utils";
 import MenuBar from './MenuBar';
 import Dock from './Dock';
-import Launchpad from './Launchpad';
+import Dashboard from './Dashboard';
 import Widgets from './Widgets';
 
 export default function Desktop({ children }: { children: React.ReactNode }) {
   const isBooted = useOSStore((state) => state.isBooted);
   const isDarkMode = useOSStore((state) => state.isDarkMode);
+  const maximizedApps = useOSStore((state) => state.maximizedApps);
+  const isAnyAppMaximized = maximizedApps.length > 0;
 
   if (!isBooted) return null;
 
@@ -29,7 +32,7 @@ export default function Desktop({ children }: { children: React.ReactNode }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
+          transition={{ duration: 1.0, ease: "easeInOut" }}
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
             backgroundImage: `url('${isDarkMode ? darkWallpaper : lightWallpaper}')`,
@@ -53,14 +56,17 @@ export default function Desktop({ children }: { children: React.ReactNode }) {
       <MenuBar />
 
       {/* Main Content Area (Windows) */}
-      <main className="relative w-full h-full pt-8 pb-20 overflow-hidden">
+      <main className={cn(
+        "relative w-full h-[calc(100vh-32px)] mt-8 overflow-hidden transition-all duration-500",
+        isAnyAppMaximized ? "pb-0" : "pb-20"
+      )}>
         <AnimatePresence>
           {children}
         </AnimatePresence>
       </main>
 
-      {/* Launchpad Overlay */}
-      <Launchpad />
+      {/* Dashboard Overlay */}
+      <Dashboard />
 
       {/* Widgets Panel */}
       <Widgets />

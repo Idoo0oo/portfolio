@@ -17,11 +17,19 @@ import Finder from './components/os/Finder';
 import Notes from './components/os/Notes';
 import Mail from './components/os/Mail';
 import Preview from './components/os/Preview';
+import Settings from './components/os/Settings';
 import MobileFallback from './components/MobileFallback';
 
 function App() {
-  const { isBooted, isDarkMode, openApps, toggleSpotlight } = useOSStore();
+  const { isBooted, isDarkMode, openApps, toggleSpotlight, accentColor } = useOSStore();
   const { playSound } = useSound();
+
+  // Sync Accent Color to CSS Variables
+  useEffect(() => {
+    document.documentElement.style.setProperty('--color-accent', accentColor);
+    // Also update a neon-glow variable based on the accent
+    document.documentElement.style.setProperty('--color-accent-glow', `${accentColor}33`); // 20% opacity
+  }, [accentColor]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -67,15 +75,7 @@ function App() {
       case 'experience': return <Notes />;
       case 'contact': return <Mail />;
       case 'preview': return <Preview />;
-      case 'settings': return <div className="bg-[#050505] text-white/90 p-8 h-full font-mono text-sm leading-relaxed">
-        <p className="text-[var(--color-neon)] font-bold mb-4 uppercase tracking-widest">System Settings</p>
-        <div className="space-y-2 opacity-60">
-          <p>► Version: 2.0.0-cinematic</p>
-          <p>► Environment: Production</p>
-          <p>► Module: Settings UI</p>
-          <p className="pt-4 animate-pulse">Status: Implementation in progress...</p>
-        </div>
-      </div>;
+      case 'settings': return <Settings />;
       default: return null;
     }
   };

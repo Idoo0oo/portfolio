@@ -1,4 +1,3 @@
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Maximize2, Minimize2, X } from "lucide-react";
 import { useOSStore, type AppId } from "../../store/useOSStore";
@@ -38,24 +37,36 @@ export default function Window({ id, title, children, defaultPosition = { x: 20,
           initial={{ 
             opacity: 0, 
             scale: 0.95, 
-            x: defaultPosition.x, 
-            y: defaultPosition.y 
+            x: isMaximized ? 0 : defaultPosition.x + 20, 
+            y: isMaximized ? 0 : defaultPosition.y + 20,
+            width: isMaximized ? '100vw' : '85vw',
+            height: isMaximized ? 'calc(100vh - 32px)' : '75vh',
           }}
           animate={{ 
             opacity: 1, 
-            scale: 1,
+            scale: isMaximized ? 1 : (isFocused ? 1 : 0.98),
             zIndex: isFocused ? 100 : 10,
-            x: isMaximized ? 0 : undefined,
-            y: isMaximized ? 0 : undefined,
-            top: isMaximized ? 28 : undefined,
-            left: isMaximized ? 0 : undefined,
-            width: isMaximized ? '100%' : undefined,
-            height: isMaximized ? 'calc(100vh - 28px)' : undefined,
+            
+            // Force reset coordinates ONLY during maximization to clear drag drift
+            ...(isMaximized ? { x: 0, y: 0, top: 0, left: 0 } : {}),
+
+            top: isMaximized ? 0 : '12.5vh',
+            left: isMaximized ? 0 : '7.5vw',
+            width: isMaximized ? '100%' : '85vw',
+            maxWidth: isMaximized ? '100%' : '1024px',
+            height: isMaximized ? '100%' : '75vh',
+            filter: !isMaximized && !isFocused ? 'blur(2px) brightness(0.8)' : 'blur(0px) brightness(1)',
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+            mass: 0.8
           }}
           exit={{ opacity: 0, scale: 0.8, y: 100 }}
           onMouseDown={() => focusApp(id)}
           className={cn(
-            "absolute flex flex-col shadow-2xl border transition-all duration-300 ease-out overflow-hidden backdrop-blur-3xl",
+            "absolute top-0 left-0 flex flex-col shadow-2xl border overflow-hidden backdrop-blur-3xl",
             isDarkMode 
               ? "bg-zinc-900/40 border-white/10 shadow-black/50" 
               : "bg-white/50 border-black/10 shadow-black/20",
@@ -63,7 +74,6 @@ export default function Window({ id, title, children, defaultPosition = { x: 20,
               ? (isDarkMode ? 'border-white/20' : 'border-black/20') 
               : (isDarkMode ? 'border-white/10' : 'border-black/10'),
             isMaximized ? 'rounded-none' : 'rounded-xl',
-            !isMaximized && 'w-[85vw] max-w-5xl h-[75vh]'
           )}
           style={{ touchAction: "none" }}
         >
@@ -86,6 +96,7 @@ export default function Window({ id, title, children, defaultPosition = { x: 20,
                 >
                   <X size={10} className="hidden group-hover:block" />
                 </button>
+                {/* Show all traffic lights for a full OS experience */}
                 <button 
                   onClick={(e) => { 
                     e.stopPropagation(); 
@@ -120,7 +131,7 @@ export default function Window({ id, title, children, defaultPosition = { x: 20,
           </div>
 
           {/* Content Area - Changed to flex-1 to allow children to fill space */}
-          <div className="flex-1 bg-transparent overflow-hidden">
+          <div className="flex-1 bg-transparent overflow-hidden min-h-0">
             {children}
           </div>
         </motion.div>

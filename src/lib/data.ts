@@ -2,6 +2,9 @@ export const projects = [
   {
     id: 1,
     title: "Digital Library System",
+    category: "Web App",
+    isStarred: true,
+    date: "2026-03-20",
     description: "Full-stack library management system built for the national Competency Skills Exam (UKK). Features a student portal, admin dashboard, automated fine calculation, role-based access, and real-time book availability tracking.",
     tech: ["React", "Vite", "Express.js", "MySQL", "TailwindCSS"],
     image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&q=80&w=800",
@@ -11,6 +14,9 @@ export const projects = [
   {
     id: 2,
     title: "GadingPro Property Portal",
+    category: "Web App",
+    isStarred: false,
+    date: "2026-01-15",
     description: "Full-stack property management portal built during my internship at GadingPro. Includes property listings, an admin CMS, and dynamic marketing page generation for high-impact property campaigns.",
     tech: ["React", "Node.js", "Express", "Vercel"],
     image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800",
@@ -20,6 +26,9 @@ export const projects = [
   {
     id: 3,
     title: "Bluetooth Relay App",
+    category: "Mobile App",
+    isStarred: true,
+    date: "2025-11-10",
     description: "A real-time Bluetooth relay application that enables seamless device-to-device communication and remote relay control via the Web Bluetooth API. Built for low-latency IoT control scenarios.",
     tech: ["JavaScript", "Web Bluetooth API", "Node.js", "WebSocket"],
     image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800",
@@ -29,6 +38,9 @@ export const projects = [
   {
     id: 4,
     title: "QR Event Attendance",
+    category: "Web App",
+    isStarred: false,
+    date: "2025-09-05",
     description: "A QR code-based event check-in and attendance tracking app. Attendees scan to instantly check in, with a real-time admin dashboard displaying live attendance logs and event stats.",
     tech: ["Vue.js", "QR Code", "JavaScript", "Vite"],
     image: "https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?auto=format&fit=crop&q=80&w=800",
@@ -38,6 +50,9 @@ export const projects = [
   {
     id: 5,
     title: "Cinematic Portfolio",
+    category: "Web App",
+    isStarred: true,
+    date: "2026-03-21",
     description: "This very portfolio — an interactive macOS-themed OS experience with physics-based animations, a Rapier-powered 3D lanyard, WebGL particle systems, and cinematic sound design. Built to push the limits of the browser.",
     tech: ["React", "Three.js", "R3F", "Rapier", "TypeScript"],
     image: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800",
@@ -47,6 +62,9 @@ export const projects = [
   {
     id: 6,
     title: "Valentine Gift",
+    category: "Web App",
+    isStarred: false,
+    date: "2025-02-14",
     description: "A custom interactive Valentine's Day web gift — an emotionally-driven user journey built with custom animations, music integration, and cinematic visual effects. A personal creative experiment in web storytelling.",
     tech: ["JavaScript", "CSS Animations", "Framer Motion"],
     image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&q=80&w=800",

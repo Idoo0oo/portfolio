@@ -1,7 +1,7 @@
-import { useRef, useMemo, useState } from 'react';
+import { useRef, useMemo, useState, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useTexture, Environment, Float, ContactShadows, PerspectiveCamera, PerformanceMonitor, AdaptiveDpr, AdaptiveEvents } from '@react-three/drei';
-import * as THREE from 'three';
+import { useTexture, Environment, Float, ContactShadows, PerspectiveCamera, PerformanceMonitor, AdaptiveDpr, AdaptiveEvents, Preload } from '@react-three/drei';
+import { MathUtils, SRGBColorSpace, LinearMipmapLinearFilter, LinearFilter, Group } from 'three';
 
 import lanyardCardImage from '/lanyard-card.webp';
 
@@ -23,8 +23,15 @@ export default function Lanyard({
       <Canvas
         gl={{ alpha: transparent, antialias: true, powerPreference: "high-performance" }}
         shadows
-        dpr={dpr} // Performance: Use dynamic DPR from PerformanceMonitor
+        dpr={dpr}
       >
+        <Suspense fallback={null}>
+          <Preload all />
+          <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+            <Card />
+          </Float>
+        </Suspense>
+
         <PerformanceMonitor onDecline={() => setDpr(1)} onIncline={() => setDpr(1.5)} />
         <AdaptiveDpr pixelated />
         <AdaptiveEvents />
@@ -33,10 +40,6 @@ export default function Lanyard({
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={0.5} />
         <spotLight position={[-10, 10, 10]} angle={0.15} penumbra={1} intensity={0.5} />
-        
-        <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-          <Card />
-        </Float>
 
         <ContactShadows 
           position={[0, -4, 0]} 
@@ -53,16 +56,16 @@ export default function Lanyard({
 }
 
 function Card() {
-  const meshRef = useRef<THREE.Group>(null);
+  const meshRef = useRef<Group>(null);
   const texture = useTexture(lanyardCardImage);
   
   // High quality texture settings
   useMemo(() => {
     if (texture) {
       texture.anisotropy = 16;
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.minFilter = THREE.LinearMipmapLinearFilter;
-      texture.magFilter = THREE.LinearFilter;
+      texture.colorSpace = SRGBColorSpace;
+      texture.minFilter = LinearMipmapLinearFilter;
+      texture.magFilter = LinearFilter;
       texture.flipY = true;
     }
   }, [texture]);
@@ -75,8 +78,8 @@ function Card() {
     const targetRotationX = (-state.pointer.y * Math.PI) / 8;
     const targetRotationY = (state.pointer.x * Math.PI) / 6;
     
-    meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, targetRotationX, 0.1);
-    meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotationY, 0.1);
+    meshRef.current.rotation.x = MathUtils.lerp(meshRef.current.rotation.x, targetRotationX, 0.1);
+    meshRef.current.rotation.y = MathUtils.lerp(meshRef.current.rotation.y, targetRotationY, 0.1);
   });
 
   return (

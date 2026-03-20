@@ -11,9 +11,10 @@ interface OSState {
   maximizedApps: AppId[];
   isDarkMode: boolean;
   isSoundEnabled: boolean;
-  isLaunchpadOpen: boolean;
+  isDashboardOpen: boolean;
   isSpotlightOpen: boolean;
   isWidgetsOpen: boolean;
+  accentColor: string;
   
   // Actions
   boot: () => void;
@@ -26,9 +27,10 @@ interface OSState {
   toggleMaximizeApp: (id: AppId) => void;
   toggleDarkMode: () => void;
   toggleSound: () => void;
-  toggleLaunchpad: () => void;
+  toggleDashboard: () => void;
   toggleSpotlight: () => void;
   toggleWidgets: () => void;
+  setAccentColor: (color: string) => void;
 }
 
 export const useOSStore = create<OSState>((set) => ({
@@ -40,26 +42,27 @@ export const useOSStore = create<OSState>((set) => ({
   maximizedApps: [],
   isDarkMode: false, // Default to light mode
   isSoundEnabled: true, // Default to sounds on
-  isLaunchpadOpen: false,
+  isDashboardOpen: false,
   isSpotlightOpen: false,
   isWidgetsOpen: false,
+  accentColor: '#10b981', // Default Neon Green
 
   boot: () => set({ isBooted: true }),
   unlock: () => set({ isLocked: false }),
   
   openApp: (id) => set((state) => {
     if (state.openApps.includes(id)) {
-      // If already open, just focus and restore if it was minimized
       return { 
         focusedApp: id,
         minimizedApps: state.minimizedApps.filter(a => a !== id),
-        isLaunchpadOpen: false // Close launchpad when opening an app
+        isDashboardOpen: false 
       };
     }
     return { 
       openApps: [...state.openApps, id],
       focusedApp: id,
-      isLaunchpadOpen: false // Close launchpad when opening an app
+      maximizedApps: [...state.maximizedApps, id], // Open all apps maximized by default for cinematic impact
+      isDashboardOpen: false 
     };
   }),
 
@@ -98,7 +101,8 @@ export const useOSStore = create<OSState>((set) => ({
 
   toggleDarkMode: () => set((state) => ({ isDarkMode: !state.isDarkMode })),
   toggleSound: () => set((state) => ({ isSoundEnabled: !state.isSoundEnabled })),
-  toggleLaunchpad: () => set((state) => ({ isLaunchpadOpen: !state.isLaunchpadOpen })),
+  toggleDashboard: () => set((state) => ({ isDashboardOpen: !state.isDashboardOpen })),
   toggleSpotlight: () => set((state) => ({ isSpotlightOpen: !state.isSpotlightOpen })),
-  toggleWidgets: () => set((state) => ({ isWidgetsOpen: !state.isWidgetsOpen }))
+  toggleWidgets: () => set((state) => ({ isWidgetsOpen: !state.isWidgetsOpen })),
+  setAccentColor: (color) => set({ accentColor: color })
 }));
