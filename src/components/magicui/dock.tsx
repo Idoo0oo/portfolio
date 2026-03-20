@@ -40,7 +40,7 @@ const Dock = React.forwardRef<
     const renderChildren = () => {
       return React.Children.map(children, (child) => {
         if (React.isValidElement(child) && typeof child.type !== 'string') {
-          return React.cloneElement(child as React.ReactElement<any>, {
+          return React.cloneElement(child as React.ReactElement<DockIconProps>, {
             mouseX,
             size: iconSize,
             magnification: iconMagnification,
@@ -127,4 +127,4 @@ const DockIcon = ({
 
 DockIcon.displayName = "DockIcon";
 
-export { Dock, DockIcon, dockVariants };
+export { Dock, DockIcon };

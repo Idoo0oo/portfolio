@@ -12,7 +12,8 @@ import {
   History,
 } from "lucide-react";
 
-const apps: { id: AppId; icon: any; label: string; color: string; description: string }[] = [
+type IconType = React.ComponentType<{ size?: number; className?: string }>;
+const apps: { id: AppId; icon: IconType; label: string; color: string; description: string }[] = [
   { id: 'terminal', icon: Terminal, label: 'Terminal', color: 'bg-zinc-800', description: 'Command line interface' },
   { id: 'about', icon: User, label: 'About Me', color: 'bg-blue-500', description: 'Who is Ido?' },
   { id: 'projects', icon: Folder, label: 'Projects', color: 'bg-amber-500', description: 'Browse all projects' },
@@ -57,9 +58,12 @@ export default function Spotlight() {
 
   useEffect(() => {
     if (isSpotlightOpen) {
-      setQuery('');
-      setSelectedIndex(0);
-      setTimeout(() => inputRef.current?.focus(), 50);
+      const timer = setTimeout(() => {
+        setSelectedIndex(0);
+        setQuery('');
+        inputRef.current?.focus();
+      }, 50);
+      return () => clearTimeout(timer);
     }
   }, [isSpotlightOpen]);
 

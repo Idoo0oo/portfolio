@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState, Suspense } from 'react';
+import { useRef, useState, Suspense, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useTexture, Environment, Float, ContactShadows, PerspectiveCamera, PerformanceMonitor, AdaptiveDpr, AdaptiveEvents, Preload } from '@react-three/drei';
 import { MathUtils, SRGBColorSpace, LinearMipmapLinearFilter, LinearFilter, Group } from 'three';
@@ -59,14 +59,15 @@ function Card() {
   const meshRef = useRef<Group>(null);
   const texture = useTexture(lanyardCardImage);
   
-  // High quality texture settings
-  useMemo(() => {
+  useEffect(() => {
     if (texture) {
+      // eslint-disable-next-line react-hooks/immutability
       texture.anisotropy = 16;
       texture.colorSpace = SRGBColorSpace;
       texture.minFilter = LinearMipmapLinearFilter;
       texture.magFilter = LinearFilter;
       texture.flipY = true;
+      texture.needsUpdate = true;
     }
   }, [texture]);
 

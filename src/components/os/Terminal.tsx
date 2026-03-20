@@ -16,10 +16,17 @@ const SKILLS = {
 const UPTIME_START = Date.now();
 
 function Neofetch() {
-  const uptimeSecs = Math.floor((Date.now() - UPTIME_START) / 1000);
-  const uptimeStr = uptimeSecs < 60
-    ? `${uptimeSecs}s`
-    : `${Math.floor(uptimeSecs / 60)}m ${uptimeSecs % 60}s`;
+  const [uptimeStr, setUptimeStr] = useState("");
+
+  useEffect(() => {
+    const uptimeSecs = Math.floor((Date.now() - UPTIME_START) / 1000);
+    const timer = setTimeout(() => {
+      setUptimeStr(uptimeSecs < 60
+        ? `${uptimeSecs}s`
+        : `${Math.floor(uptimeSecs / 60)}m ${uptimeSecs % 60}s`);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   const neon = "text-[var(--color-accent)]";
 
@@ -184,7 +191,7 @@ export default function Terminal() {
         output = "► Opening Mail...";
         break;
       case "resume":
-        openApp('preview' as any);
+        openApp('preview');
         output = "► Opening CV in Preview...";
         break;
       case "clear":

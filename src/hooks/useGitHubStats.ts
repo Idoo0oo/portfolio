@@ -84,7 +84,7 @@ export function useGitHubStats(username: string) {
 
         const user = data.data.user;
         const totalStars = user.repositories.nodes.reduce(
-          (acc: number, repo: any) => acc + repo.stargazerCount, 
+          (acc: number, repo: { stargazerCount: number }) => acc + repo.stargazerCount, 
           0
         );
 
@@ -96,8 +96,12 @@ export function useGitHubStats(username: string) {
           loading: false,
           error: null,
         });
-      } catch (err: any) {
-        setStats(prev => ({ ...prev, loading: false, error: err.message }));
+      } catch (err) {
+        setStats(prev => ({ 
+          ...prev, 
+          loading: false, 
+          error: err instanceof Error ? err.message : 'An unknown error occurred' 
+        }));
       }
     }
 

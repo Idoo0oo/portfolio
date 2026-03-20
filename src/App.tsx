@@ -122,7 +122,7 @@ function App() {
               {openApps.map((appId) => (
                 <Window 
                   key={appId} 
-                  id={appId as any} 
+                  id={appId} 
                   title={getAppTitle(appId)}
                 >
                   {renderAppContent(appId)}

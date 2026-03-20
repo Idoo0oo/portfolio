@@ -164,10 +164,10 @@ export default function Notes() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5 text-[10px] text-white/30 font-medium">
                     {item.type === 'experience' ? <Building2 size={10} className="text-blue-400/50" /> : <Code size={10} className="text-emerald-400/50" />}
-                    <span className="truncate">{item.company || (item as any).category || 'Project'}</span>
+                    <span className="truncate">{item.company || item.category || 'Project'}</span>
                 </div>
-                {item.type === 'project' && (item as any).tech?.[0] && (
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-500/80 border border-emerald-500/20">{(item as any).tech[0]}</span>
+                {item.type === 'project' && item.tech?.[0] && (
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-500/80 border border-emerald-500/20">{item.tech[0]}</span>
                 )}
               </div>
             </button>
@@ -256,7 +256,7 @@ export default function Notes() {
                             </div>
                             <div>
                                 <p className="text-[10px] text-white/20 uppercase font-black tracking-widest">Category</p>
-                                <p className="text-base font-bold text-white/90">{(selectedNote as any).category}</p>
+                                <p className="text-base font-bold text-white/90">{selectedNote.category}</p>
                             </div>
                         </div>
                         <div className="hidden sm:block w-px h-10 bg-white/5" />
@@ -266,7 +266,7 @@ export default function Notes() {
                             </div>
                             <div>
                                 <p className="text-[10px] text-white/20 uppercase font-black tracking-widest">Tech Stack</p>
-                                <p className="text-xs font-bold text-white/90 truncate">{(selectedNote as any).tech?.join(', ')}</p>
+                                <p className="text-xs font-bold text-white/90 truncate">{selectedNote.tech?.join(', ')}</p>
                             </div>
                         </div>
                     </>
@@ -304,7 +304,7 @@ export default function Notes() {
                 {selectedNote.type === 'project' && (
                     <div className="space-y-8 animate-in fade-in duration-700">
                         <div className="grid grid-cols-2 gap-4">
-                            {(selectedNote as any).tech?.map((t: string) => (
+                            {selectedNote.tech?.map((t: string) => (
                                 <div key={t} className="flex items-center gap-3 p-4 bg-white/[0.03] border border-white/5 rounded-2xl group hover:border-[var(--color-accent)]/20 transition-colors">
                                     <div className="p-2 rounded bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
                                         <Code size={14} />

@@ -14,7 +14,8 @@ import { useOSStore, type AppId } from "../../store/useOSStore";
 import { useGitHubStats } from "../../hooks/useGitHubStats";
 import { cn } from "../../lib/utils";
 
-const apps: { id: AppId; icon: any; label: string; color: string }[] = [
+type IconType = React.ComponentType<{ size?: number; className?: string }>;
+const apps: { id: AppId; icon: IconType; label: string; color: string }[] = [
   { id: 'terminal', icon: Terminal, label: 'Terminal', color: 'bg-zinc-800' },
   { id: 'about', icon: User, label: 'About Me', color: 'bg-blue-500' },
   { id: 'projects', icon: Folder, label: 'Projects', color: 'bg-amber-500' },
