@@ -34,13 +34,14 @@ export default function Widgets() {
             exit={{ x: '100%', opacity: 0 }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className={cn(
-              "fixed top-12 right-4 bottom-4 w-[280px] z-[551] backdrop-blur-2xl border rounded-[2.5rem] p-5 shadow-2xl overflow-y-auto custom-scrollbar transition-colors duration-300",
+              "fixed top-12 right-4 bottom-4 w-[280px] z-[551] backdrop-blur-2xl border rounded-[2.5rem] shadow-2xl transition-colors duration-300 overflow-hidden flex flex-col",
               isDarkMode 
                 ? "bg-[#1e1e1e]/70 border-white/10" 
                 : "bg-white/70 border-black/5"
             )}
           >
-            <div className="flex flex-col gap-4">
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-5">
+              <div className="flex flex-col gap-4">
               {/* Date & Time Widget */}
               <div className={cn(
                 "rounded-2xl p-4 border shadow-xl transition-colors",
@@ -175,12 +176,14 @@ export default function Widgets() {
               </div>
             </div>
 
-            <div className="mt-8 text-center">
+            </div>
+
+            <div className="mt-8 text-center pb-8">
               <button 
                 onClick={toggleWidgets}
                 className={cn(
                   "text-[10px] uppercase tracking-[0.2em] transition-colors",
-                  isDarkMode ? "text-white/20 hover:text-white/40" : "text-black/20 hover:text-black/40"
+                  isDarkMode ? "text-white/60 hover:text-white/80" : "text-black/60 hover:text-black/80"
                 )}
               >
                 Edit Widgets

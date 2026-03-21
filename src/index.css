@@ -45,9 +45,19 @@ body {
   will-change: backdrop-filter, transform;
 }
 
-/* macOS Scrollbar */
+/* macOS Scrollbar - Dynamic & Floating */
+:root {
+  --scrollbar-thumb: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.3);
+}
+
+.dark {
+  --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.25);
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 8px; /* Slightly thinner */
   height: 8px;
 }
 
@@ -56,12 +66,16 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+  background-color: var(--scrollbar-thumb);
+  border-radius: 20px;
+  /* Floating effect: ensure it stays within rounded corners by using a border */
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background-color: var(--scrollbar-thumb-hover);
 }
 
 /* Vignette & Grain */

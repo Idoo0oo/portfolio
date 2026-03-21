@@ -24,6 +24,10 @@ function App() {
   const { isBooted, isDarkMode, openApps, toggleSpotlight, accentColor } = useOSStore();
   const { playSound } = useSound();
 
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', isDarkMode);
+  }, [isDarkMode]);
+
   // Sync Accent Color to CSS Variables
   useEffect(() => {
     document.documentElement.style.setProperty('--color-accent', accentColor);
