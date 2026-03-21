@@ -12,8 +12,8 @@ import {
   ExternalLink,
   Activity
 } from "lucide-react";
-import { useOSStore } from "../../store/useOSStore";
-import { cn } from "../../lib/utils";
+import { useOSStore } from "../../core/store/useOSStore";
+import { cn } from "../../core/lib/utils";
 
 type TabId = "appearance" | "sounds" | "about";
 
@@ -169,10 +169,10 @@ export default function Settings() {
 
                 <div className="space-y-1 relative">
                   <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 tracking-tighter leading-none">
-                    portfolioOS
+                    PortfolioOS
                   </h2>
                   <p className="text-[10px] font-bold text-[var(--color-accent)] uppercase tracking-[0.3em] opacity-80">
-                     Cinematic Experience Prototype
+                     Portfolio Experience Prototype
                   </p>
                 </div>
              </div>

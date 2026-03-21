@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useOSStore } from "../../store/useOSStore";
+import { useOSStore } from "../../core/store/useOSStore";
 import AppleLogo from "./AppleLogo";
-import { cn } from "../../lib/utils";
+import { cn } from "../../core/lib/utils";
 
 export default function BootScreen() {
   const [progress, setProgress] = useState(0);

@@ -16,8 +16,8 @@ import {
   Plus
 } from "lucide-react";
 import { toast } from "sonner";
-import { cn } from "../../lib/utils";
-import { useSound } from "../../hooks/useSound";
+import { cn } from "../../core/lib/utils";
+import { useSound } from "../../core/hooks/useSound";
 
 const socials = [
   { Icon: Github, href: "https://github.com/Idoo0oo", label: "GitHub" },

@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useOSStore } from "../../store/useOSStore";
-import { cn } from "../../lib/utils";
+import { useOSStore } from "../../core/store/useOSStore";
+import { cn } from "../../core/lib/utils";
 import { 
   Cloud, 
   MapPin, 

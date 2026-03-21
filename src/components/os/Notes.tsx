@@ -16,8 +16,8 @@ import {
   Tag,
   Code
 } from "lucide-react";
-import { experience, projects } from "../../lib/data";
-import { cn } from "../../lib/utils";
+import { experience, projects } from "../../core/lib/data";
+import { cn } from "../../core/lib/utils";
 
 type ContentType = 'experience' | 'project';
 type FolderType = 'all' | 'professional' | 'projects';

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, type KeyboardEvent } from "react";
-import { useOSStore } from "../../store/useOSStore";
+import { useOSStore } from "../../core/store/useOSStore";
 
 interface HistoryItem {
   command: string;

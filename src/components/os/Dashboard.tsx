@@ -10,9 +10,9 @@ import {
   Activity,
   Github,
 } from "lucide-react";
-import { useOSStore, type AppId } from "../../store/useOSStore";
-import { useGitHubStats } from "../../hooks/useGitHubStats";
-import { cn } from "../../lib/utils";
+import { useOSStore, type AppId } from "../../core/store/useOSStore";
+import { useGitHubStats } from "../../core/hooks/useGitHubStats";
+import { cn } from "../../core/lib/utils";
 
 type IconType = React.ComponentType<{ size?: number; className?: string }>;
 const apps: { id: AppId; icon: IconType; label: string; color: string }[] = [

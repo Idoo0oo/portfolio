@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Command, Folder, ExternalLink } from 'lucide-react';
-import { useOSStore, type AppId } from "../../store/useOSStore";
-import { cn } from "../../lib/utils";
-import { projects, experience } from "../../lib/data";
+import { useOSStore, type AppId } from "../../core/store/useOSStore";
+import { cn } from "../../core/lib/utils";
+import { projects, experience } from "../../core/lib/data";
 import { 
   Terminal, 
   User, 

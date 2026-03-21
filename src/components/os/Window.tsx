@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Maximize2, Minimize2, X } from "lucide-react";
-import { useOSStore, type AppId } from "../../store/useOSStore";
-import { cn } from "../../lib/utils";
-import { useSound } from "../../hooks/useSound";
+import { useOSStore, type AppId } from "../../core/store/useOSStore";
+import { cn } from "../../core/lib/utils";
+import { useSound } from "../../core/hooks/useSound";
 
 interface WindowProps {
   id: AppId;

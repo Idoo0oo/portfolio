@@ -10,9 +10,9 @@ import {
   Volume2, 
   VolumeX 
 } from "lucide-react";
-import { useOSStore } from "../../store/useOSStore";
+import { useOSStore } from "../../core/store/useOSStore";
 import AppleLogo from "./AppleLogo";
-import { cn } from "../../lib/utils";
+import { cn } from "../../core/lib/utils";
 
 export default function MenuBar() {
   const [time, setTime] = useState(new Date());

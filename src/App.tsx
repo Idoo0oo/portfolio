@@ -6,10 +6,10 @@ import Desktop from './components/os/Desktop';
 import Window from './components/os/Window';
 import Terminal from './components/os/Terminal';
 
-import { useOSStore } from './store/useOSStore';
+import { useOSStore } from './core/store/useOSStore';
 import Spotlight from './components/os/Spotlight';
 import { useEffect, useState } from 'react';
-import { useSound } from './hooks/useSound';
+import { useSound } from './core/hooks/useSound';
 
 // Components (OS Environment)
 import AboutThisMac from './components/os/AboutThisMac';
@@ -18,7 +18,7 @@ import Notes from './components/os/Notes';
 import Mail from './components/os/Mail';
 import Preview from './components/os/Preview';
 import Settings from './components/os/Settings';
-import MobileFallback from './components/MobileFallback';
+import MobileFallback from './components/ui/MobileFallback';
 
 function App() {
   const { isBooted, isDarkMode, openApps, toggleSpotlight, accentColor } = useOSStore();

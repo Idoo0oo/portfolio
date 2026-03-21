@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useOSStore } from '../../store/useOSStore';
-import { cn } from "../../lib/utils";
+import { useOSStore } from '../../core/store/useOSStore';
+import { cn } from "../../core/lib/utils";
 import MenuBar from './MenuBar';
 import Dock from './Dock';
 import Dashboard from './Dashboard';

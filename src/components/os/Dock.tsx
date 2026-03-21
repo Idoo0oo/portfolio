@@ -11,10 +11,10 @@ import {
   Search,
   FileText
 } from "lucide-react";
-import { useOSStore, type AppId } from "../../store/useOSStore";
+import { useOSStore, type AppId } from "../../core/store/useOSStore";
 import { Dock as MagicDock, DockIcon as MagicDockIcon } from "../magicui/dock";
-import { cn } from "../../lib/utils";
-import { useSound } from "../../hooks/useSound";
+import { cn } from "../../core/lib/utils";
+import { useSound } from "../../core/hooks/useSound";
 
 type IconType = React.ComponentType<{ size?: number; className?: string }>;
 const apps: { id: AppId; icon: IconType; label: string; color: string }[] = [

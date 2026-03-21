@@ -15,8 +15,8 @@ import {
   ExternalLink,
   Info
 } from "lucide-react";
-import { projects } from "../../lib/data";
-import { cn } from "../../lib/utils";
+import { projects } from "../../core/lib/data";
+import { cn } from "../../core/lib/utils";
 
 type ViewMode = 'grid' | 'list' | 'columns';
 

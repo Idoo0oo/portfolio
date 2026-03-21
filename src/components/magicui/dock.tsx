@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 // import { cva, type VariantProps } from "class-variance-authority";
 import { motion, useMotionValue, useSpring, useTransform, type MotionValue, type HTMLMotionProps } from "framer-motion";
-import { cn } from "../../lib/utils";
+import { cn } from "../../core/lib/utils";
 
 export interface DockProps
   extends Omit<HTMLMotionProps<"div">, "onAnimationStart"> {

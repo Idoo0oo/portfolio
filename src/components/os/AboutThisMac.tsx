@@ -1,6 +1,6 @@
 import { useEffect, useState, Component, type ErrorInfo, type ReactNode } from 'react';
-import { useOSStore } from '../../store/useOSStore';
-import { cn } from "../../lib/utils";
+import { useOSStore } from '../../core/store/useOSStore';
+import { cn } from "../../core/lib/utils";
 import { motion } from 'framer-motion';
 
 class ErrorBoundary extends Component<{ children: ReactNode, fallback: ReactNode }, { hasError: boolean }> {
