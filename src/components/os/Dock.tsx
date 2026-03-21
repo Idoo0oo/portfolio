@@ -108,7 +108,7 @@ export default function MacOSDock() {
         {/* Separator */}
         <div className={cn(
           "w-[1px] h-10 mx-1 self-center transition-colors",
-          isDarkMode ? "bg-white/20" : "bg-black/10"
+          isDarkMode ? "bg-white/20" : "bg-white/20"
         )} />
 
         {/* App Icons */}
