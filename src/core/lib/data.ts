@@ -20,8 +20,7 @@ export const projects = [
     description: "Full-stack property management portal built during my internship at GadingPro. Includes property listings, an admin CMS, and dynamic marketing page generation for high-impact property campaigns.",
     tech: ["React", "Node.js", "Express", "Vercel"],
     image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800",
-    github: "https://github.com/Idoo0oo/gadingpro-fullstack",
-    demo: "https://gadingpro-backend.vercel.app"
+    github: "https://github.com/Idoo0oo/gadingpro-fullstack"
   },
   {
     id: 3,
@@ -69,7 +68,7 @@ export const projects = [
     tech: ["JavaScript", "CSS Animations", "Framer Motion"],
     image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&q=80&w=800",
     github: "https://github.com/Idoo0oo/valentine-gift",
-    demo: "https://idoo0oo.github.io/valentine-gift"
+    demo: "https://valentinegift-bydittskiee.vercel.app/"
   }
 ];
 
