@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type AppId = 'terminal' | 'about' | 'projects' | 'experience' | 'contact' | 'settings' | 'preview';
+export type AppId = 'terminal' | 'about' | 'projects' | 'experience' | 'contact' | 'settings' | 'preview' | 'messages';
 
 interface OSState {
   isBooted: boolean;

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mhmmditto.vercel.app/sitemap.xml
