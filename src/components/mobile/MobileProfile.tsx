@@ -42,7 +42,6 @@ export default function MobileProfile() {
   const titleColor = useMemo(() => cn('transition-colors duration-500', isDarkMode ? 'text-white' : 'text-zinc-900'), [isDarkMode]);
   const subColor   = useMemo(() => cn('transition-colors duration-500', isDarkMode ? 'text-white/45' : 'text-zinc-500'), [isDarkMode]);
   const bodyColor  = useMemo(() => cn('transition-colors duration-500', isDarkMode ? 'text-white/70' : 'text-zinc-600'), [isDarkMode]);
-  const trackBg    = useMemo(() => cn('transition-colors duration-500', isDarkMode ? 'bg-white/8' : 'bg-black/8'), [isDarkMode]);
 
   // Card State
   const [showQR, setShowQR] = useState(false);
@@ -154,7 +153,7 @@ export default function MobileProfile() {
             </button>
             
             <button 
-              onClick={(e) => {
+              onClick={() => {
                 triggerHaptic();
                 handleCopy();
               }}
