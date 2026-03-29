@@ -18,11 +18,20 @@ import Notes from './components/os/Notes';
 import Mail from './components/os/Mail';
 import Preview from './components/os/Preview';
 import Settings from './components/os/Settings';
-import MobileFallback from './components/ui/MobileFallback';
+import MobileOS from './components/mobile/MobileOS';
 
 function App() {
   const { isBooted, isDarkMode, openApps, toggleSpotlight, accentColor } = useOSStore();
   const { playSound } = useSound();
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDarkMode);
@@ -48,28 +57,22 @@ function App() {
   }, [toggleSpotlight]);
 
   useEffect(() => {
+    if (isMobile) return; // no sounds on mobile
     const handleGlobalClick = () => {
       playSound('click', 0.4);
     };
 
     window.addEventListener('click', handleGlobalClick);
     return () => window.removeEventListener('click', handleGlobalClick);
-  }, [playSound]);
+  }, [playSound, isMobile]);
 
   useEffect(() => {
-    if (isBooted) {
+    if (isBooted && !isMobile) {
       playSound('chime', 0.8);
     }
-  }, [isBooted, playSound]);
+  }, [isBooted, playSound, isMobile]);
 
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
 
   const renderAppContent = (id: string) => {
     switch (id) {
@@ -97,7 +100,7 @@ function App() {
   };
 
   if (isMobile) {
-    return <MobileFallback />;
+    return <MobileOS />;
   }
 
   return (

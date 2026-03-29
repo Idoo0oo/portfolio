@@ -162,32 +162,19 @@ export default function Widgets() {
                 <div className="grid grid-cols-2 gap-2">
                   <a href="#" className={cn(
                     "flex items-center justify-between p-2 rounded-lg transition-colors text-[10px]",
-                    isDarkMode ? "bg-white/5 text-white/80 hover:bg-white/10" : "bg-black/5 text-zinc-700 hover:bg-black/10"
+                    isDarkMode ? "bg-white/10 text-white/90 hover:bg-white/20" : "bg-black/10 text-zinc-800 hover:bg-black/20"
                   )}>
                     GitHub <ExternalLink size={10} />
                   </a>
                   <a href="#" className={cn(
                     "flex items-center justify-between p-2 rounded-lg transition-colors text-[10px]",
-                    isDarkMode ? "bg-white/5 text-white/80 hover:bg-white/10" : "bg-black/5 text-zinc-700 hover:bg-black/10"
+                    isDarkMode ? "bg-white/10 text-white/90 hover:bg-white/20" : "bg-black/10 text-zinc-800 hover:bg-black/20"
                   )}>
                     LinkedIn <ExternalLink size={10} />
                   </a>
                 </div>
               </div>
             </div>
-
-            </div>
-
-            <div className="mt-8 text-center pb-8">
-              <button 
-                onClick={toggleWidgets}
-                className={cn(
-                  "text-[10px] uppercase tracking-[0.2em] transition-colors",
-                  isDarkMode ? "text-white/60 hover:text-white/80" : "text-black/60 hover:text-black/80"
-                )}
-              >
-                Edit Widgets
-              </button>
             </div>
           </motion.div>
         </>
