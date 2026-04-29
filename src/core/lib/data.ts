@@ -48,7 +48,7 @@ export const projects = [
   },
   {
     id: 5,
-    title: "Cinematic Portfolio",
+    title: "macOS Portfolio",
     category: "Web App",
     isStarred: true,
     date: "2026-03-21",

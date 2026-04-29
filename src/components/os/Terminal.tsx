@@ -49,7 +49,7 @@ function Neofetch() {
         <p><span className={neon}>name      </span> Muhammad Ditto</p>
         <p><span className={neon}>role      </span> Full-Stack Developer</p>
         <p><span className={neon}>location  </span> Tangerang, Indonesia</p>
-        <p><span className={neon}>os        </span> macOS Cinematic Portfolio v2.0</p>
+        <p><span className={neon}>os        </span> macOS Portfolio v2.0</p>
         <p><span className={neon}>kernel    </span> React 18 + Vite + Three.js</p>
         <p><span className={neon}>uptime    </span> {uptimeStr}</p>
         <p><span className={neon}>shell     </span> zsh 5.9</p>
@@ -91,7 +91,7 @@ export default function Terminal() {
       command: "",
       output: (
         <span className="text-white/50 text-[11px]">
-          Welcome to <span className="text-[var(--color-accent)]">macOS Cinematic Portfolio</span> v2.0{"\n"}
+          Welcome to <span className="text-[var(--color-accent)]">macOS Portfolio</span> v2.0{"\n"}
           Type <span className="text-white">'help'</span> for available commands, or{" "}
           <span className="text-white">'neofetch'</span> for system info.
         </span>

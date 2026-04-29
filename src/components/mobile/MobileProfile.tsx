@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { experience } from '../../core/lib/data';
 import MobileGallery from './MobileGallery';
+import { BrandIcons } from '../os/BrandIcons';
 
 const socialLinks = [
   { icon: Github,    href: 'https://github.com/Idoo0oo',               label: 'GitHub',    color: 'text-white bg-zinc-800' },
@@ -14,13 +15,25 @@ const socialLinks = [
   { icon: Mail,      href: 'mailto:dittosanzz05@gmail.com',             label: 'Email',     color: 'text-white bg-red-500' },
 ];
 
-const skillsWithLevel = [
-  { name: 'React',         level: 90 },
-  { name: 'TypeScript',    level: 82 },
-  { name: 'Node.js',       level: 78 },
-  { name: 'Three.js',      level: 70 },
-  { name: 'Tailwind CSS',  level: 88 },
-  { name: 'Laravel / PHP', level: 75 },
+const skills = [
+  { name: 'React', icon: BrandIcons.React, color: 'text-blue-400' },
+  { name: 'TypeScript', icon: BrandIcons.TypeScript, color: 'text-blue-600' },
+  { name: 'Node.js', icon: BrandIcons.Nodejs, color: 'text-green-500' },
+  { name: 'Three.js', icon: BrandIcons.Threejs, color: 'text-white' },
+  { name: 'Tailwind', icon: BrandIcons.Tailwind, color: 'text-cyan-400' },
+  { name: 'Laravel', icon: BrandIcons.Laravel, color: 'text-red-500' },
+  { name: 'PHP', icon: BrandIcons.PHP, color: 'text-indigo-400' },
+  { name: 'Python', icon: BrandIcons.Python, color: 'text-yellow-400' },
+  { name: 'Javascript', icon: BrandIcons.Javascript, color: 'text-yellow-300' },
+  { name: 'Vue.js', icon: BrandIcons.Vue, color: 'text-emerald-500' },
+  { name: 'MySQL', icon: BrandIcons.MySQL, color: 'text-blue-500' },
+  { name: 'PostgreSQL', icon: BrandIcons.PostgreSQL, color: 'text-blue-400' },
+  { name: 'Express', icon: BrandIcons.Express, color: 'text-gray-400' },
+  { name: 'Bootstrap', icon: BrandIcons.Bootstrap, color: 'text-purple-500' },
+  { name: 'Framer Motion', icon: BrandIcons.FramerMotion, color: 'text-pink-500' },
+  { name: 'Figma', icon: BrandIcons.Figma, color: 'text-orange-400' },
+  { name: 'Git', icon: BrandIcons.Git, color: 'text-orange-600' },
+  { name: 'GitHub', icon: Github, color: 'text-white' },
 ];
 
 const stagger = {
@@ -227,55 +240,28 @@ export default function MobileProfile() {
           </div>
         </motion.div>
 
-        {/* Animated Skill Progress Bars (Apple Watch Rings Style) */}
+        {/* Tech Stack Icons */}
         <motion.div variants={fadeUp} className={cn('p-5 py-6 rounded-[24px] border shadow-sm', cardBg)}>
-          <h3 className="text-[12px] font-black uppercase tracking-widest mb-6 text-center text-teal-400">Tech Stack Mastery</h3>
-          <div className="flex flex-wrap justify-center gap-x-4 gap-y-6">
-            {skillsWithLevel.map((skill, i) => {
-              const radius = 28;
-              const strokeWidth = 5;
-              const normalizedRadius = radius - strokeWidth * 2;
-              const circumference = normalizedRadius * 2 * Math.PI;
-              const strokeDashoffset = circumference - (skill.level / 100) * circumference;
-              
-              // Vibrant specific colors for aesthetic rings
-              const colors = ['#00E5FF', '#00E676', '#D500F9', '#FFD600', '#FF3D00'];
-              const ringColor = colors[i % colors.length];
-
-              return (
-                <div key={skill.name} className="flex flex-col items-center gap-2">
-                  <div className="relative w-[60px] h-[60px] flex items-center justify-center font-bold">
-                    <svg viewBox="0 0 60 60" className="w-full h-full -rotate-90 drop-shadow-md">
-                      <circle
-                        stroke={isDarkMode ? '#222' : '#e5e5e5'}
-                        fill="transparent"
-                        strokeWidth={strokeWidth}
-                        r={normalizedRadius}
-                        cx="30"
-                        cy="30"
-                      />
-                      <motion.circle
-                        stroke={ringColor}
-                        fill="transparent"
-                        strokeWidth={strokeWidth}
-                        strokeDasharray={circumference + ' ' + circumference}
-                        initial={{ strokeDashoffset: circumference }}
-                        whileInView={{ strokeDashoffset }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.5, delay: i * 0.1, type: 'spring', bounce: 0.2 }}
-                        r={normalizedRadius}
-                        cx="30"
-                        cy="30"
-                        strokeLinecap="round"
-                        className="drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]"
-                      />
-                    </svg>
-                    <span className={cn('absolute text-[11px]', titleColor)}>{skill.level}%</span>
-                  </div>
-                  <span className={cn('text-[9px] font-black uppercase tracking-widest', subColor)}>{skill.name}</span>
-                </div>
-              );
-            })}
+          <h3 className="text-[12px] font-black uppercase tracking-widest mb-5 text-center text-teal-400">Tech Stack</h3>
+          <div className="flex flex-wrap justify-center gap-2">
+            {skills.map((skill, i) => (
+              <motion.div
+                key={skill.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.03, duration: 0.3 }}
+                className={cn(
+                  'flex items-center gap-1.5 px-3 py-2 rounded-full border text-[11px] font-semibold transition-colors',
+                  isDarkMode
+                    ? 'bg-zinc-900/60 border-white/10 text-white/80'
+                    : 'bg-zinc-100 border-black/8 text-zinc-700'
+                )}
+              >
+                <skill.icon size={14} className={cn('shrink-0', skill.color)} />
+                <span>{skill.name}</span>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
 
