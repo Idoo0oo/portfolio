@@ -69,6 +69,42 @@ export const projects = [
     image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&q=80&w=800",
     github: "https://github.com/Idoo0oo/valentine-gift",
     demo: "https://valentinegift-bydittskiee.vercel.app/"
+  },
+  {
+    id: 7,
+    title: "Company Profile DML",
+    category: "Web App",
+    isStarred: true,
+    date: "2026-06-17",
+    description: "Modern company profile website built with Next.js 16 and Tailwind v4, featuring Framer Motion for cinematic animations and highly responsive layout.",
+    tech: ["Next.js", "React 19", "Tailwind CSS", "Framer Motion"],
+    image: "/company-profile-dml.png",
+    github: "",
+    demo: "https://divamutiaralogistik.com/"
+  },
+  {
+    id: 8,
+    title: "DML Logistics ERP",
+    category: "Web App",
+    isStarred: true,
+    date: "2026-06-15",
+    description: "A full-stack Enterprise Resource Planning (ERP) application for a logistics company. Includes robust backend API, real-time analytics with Recharts, PDF/Excel reporting, and secure JWT authentication.",
+    tech: ["React", "Express.js", "Sequelize", "Tailwind CSS", "MySQL"],
+    image: "/dml-erp.png",
+    github: "",
+    demo: ""
+  },
+  {
+    id: 9,
+    title: "Restaurant Ordering System",
+    category: "Web App",
+    isStarred: true,
+    date: "2026-06-10",
+    description: "A real-time restaurant ordering and management system. Features QR code-based menu access, real-time order updates via Socket.io, Vue 3 reactivity on the frontend, and a PostgreSQL-backed Express.js API.",
+    tech: ["Vue.js", "Express.js", "PostgreSQL", "Socket.io", "Tailwind CSS"],
+    image: "/restaurant-ordering.png",
+    github: "",
+    demo: "https://caffee-tongkrongan.vercel.app/order"
   }
 ];
 
