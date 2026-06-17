@@ -12,7 +12,6 @@ import MobileMessages from './MobileMessages';
 
 // Mobile OS Chrome
 import MobileLockScreen from './MobileLockScreen';
-import MobileStatusBar from './MobileStatusBar';
 import MobileNotification from './MobileNotification';
 
 // Tab transition settings
@@ -56,8 +55,7 @@ export default function MobileOS() {
         }}
       />
 
-      {/* Status Bar (Always visible, even behind lock screen for realism) */}
-      <MobileStatusBar />
+      {/* Status Bar (Removed to free up space) */}
 
       {/* Main Content Area */}
       <motion.div
