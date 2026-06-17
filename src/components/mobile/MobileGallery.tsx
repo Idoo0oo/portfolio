@@ -1,3 +1,4 @@
+/* aria-label */
 import { motion, AnimatePresence } from 'framer-motion';
 import { useOSStore } from '../../core/store/useOSStore';
 import { cn, triggerHaptic } from '../../core/lib/utils';
@@ -38,7 +39,7 @@ export default function MobileGallery({ onClose }: MobileGalleryProps) {
         isDarkMode ? "bg-black/60 border-white/10" : "bg-white/60 border-black/5"
       )}>
         <h2 className={cn("text-xl font-black tracking-tight", isDarkMode ? "text-white" : "text-zinc-900")}>
-          Galler
+          Gallery
         </h2>
         <button
           onClick={() => {

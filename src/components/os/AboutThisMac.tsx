@@ -58,7 +58,7 @@ const skills = [
   { name: 'MySQL', icon: BrandIcons.MySQL, color: 'text-blue-500' },
   { name: 'PostgreSQL', icon: BrandIcons.PostgreSQL, color: 'text-blue-400' },
   { name: 'Express', icon: BrandIcons.Express, color: 'text-gray-400' },
-  { name: 'Bootstrap', icon: BrandIcons.Bootstrap, color: 'text-purple-500' },
+  { name: 'Bootstrap', icon: BrandIcons.Bootstrap, color: 'text-teal-500' },
   { name: 'Framer Motion', icon: BrandIcons.FramerMotion, color: 'text-pink-500' },
   { name: 'Figma', icon: BrandIcons.Figma, color: 'text-orange-400' },
   { name: 'Git', icon: BrandIcons.Git, color: 'text-orange-600' },

@@ -1,3 +1,4 @@
+/* aria-label */
 import { useState } from "react";
 import { 
   Monitor, 
@@ -86,7 +87,7 @@ export default function Settings() {
             <section>
               <h3 className="text-xs font-bold text-white/30 uppercase tracking-widest mb-4">Accent Color</h3>
               <div className="flex gap-3">
-                {['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#a855f7'].map(color => (
+                {['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'].map(color => (
                   <div 
                     key={color} 
                     onClick={() => setAccentColor(color)}

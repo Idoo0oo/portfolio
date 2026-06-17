@@ -10,6 +10,11 @@ import MobileProjects from './MobileProjects';
 import MobileProfile from './MobileProfile';
 import MobileMessages from './MobileMessages';
 
+// Mobile OS Chrome
+import MobileLockScreen from './MobileLockScreen';
+import MobileStatusBar from './MobileStatusBar';
+import MobileNotification from './MobileNotification';
+
 // Tab transition settings
 const viewVariants = {
   initial: { opacity: 0, y: 15, scale: 0.98 },
@@ -21,11 +26,27 @@ export default function MobileOS() {
   const { isDarkMode } = useOSStore();
   const [activeTab, setActiveTab] = useState<MobileTab>('home');
 
+  // Lock screen: skip if already unlocked this session
+  const [isLocked, setIsLocked] = useState(() => {
+    return !sessionStorage.getItem('portfolio_unlocked');
+  });
+
+  const handleUnlock = () => {
+    setIsLocked(false);
+  };
+
   return (
     <div className={cn(
       'fixed inset-0 w-full h-full overflow-hidden select-none transition-colors duration-700',
       isDarkMode ? 'bg-[#000000]' : 'bg-[#f8f9fa]'
     )}>
+
+      {/* Lock Screen Overlay */}
+      <AnimatePresence>
+        {isLocked && (
+          <MobileLockScreen onUnlock={handleUnlock} />
+        )}
+      </AnimatePresence>
 
       {/* Subtle Noise Texture overlay (Performance friendly) */}
       <div 
@@ -35,13 +56,17 @@ export default function MobileOS() {
         }}
       />
 
+      {/* Status Bar (Always visible, even behind lock screen for realism) */}
+      <MobileStatusBar />
+
       {/* Main Content Area */}
       <motion.div
         key="os"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: isLocked ? 0 : 1 }}
         transition={{ duration: 0.5 }}
         className="absolute inset-0 z-10 flex flex-col pt-safe-top pb-safe-bottom"
+        style={{ pointerEvents: isLocked ? 'none' : 'auto' }}
       >
         <div className="flex-1 relative">
           <AnimatePresence mode="wait">
@@ -65,6 +90,11 @@ export default function MobileOS() {
         {/* Bottom Navigation Bar */}
         <BottomTabBar activeTab={activeTab} onChangeTab={setActiveTab} />
       </motion.div>
+
+      {/* Notification Banner (shows after unlock) */}
+      {!isLocked && (
+        <MobileNotification onNavigate={setActiveTab} />
+      )}
     </div>
   );
 }

@@ -18,6 +18,7 @@ import {
 import { toast } from "sonner";
 import { cn } from "../../core/lib/utils";
 import { useSound } from "../../core/hooks/useSound";
+import { useEmailJS } from "../../core/hooks/useEmailJS";
 
 const socials = [
   { Icon: Github, href: "https://github.com/Idoo0oo", label: "GitHub" },
@@ -27,33 +28,32 @@ const socials = [
 
 export default function Mail() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const { playSound } = useSound();
   const formRef = useRef<HTMLFormElement>(null);
   const toEmail = "dittosanzz05@gmail.com";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // EmailJS integration (falls back to mailto if not configured)
+  const { sendEmail, isLoading: isSubmitting, isSuccess } = useEmailJS();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-
-    const subject = encodeURIComponent(formData.subject || 'Portfolio Contact');
-    const body = encodeURIComponent(`From: ${formData.email}\n\n${formData.message}`);
-    window.open(`mailto:${toEmail}?subject=${subject}&body=${body}`, '_blank');
-
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
+    const success = await sendEmail(formData);
+    
+    if (success) {
       playSound('sent', 0.5);
-      toast.success("Email client opened!", {
-        description: "Complete sending in your email app.",
+      toast.success("Message sent successfully!", {
+        description: "I'll get back to you soon.",
         style: { background: '#111', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }
       });
       setTimeout(() => {
-        setIsSuccess(false);
         setFormData({ name: '', email: '', subject: '', message: '' });
       }, 3000);
-    }, 800);
+    } else {
+      toast.error("Failed to send message", {
+        description: "Please try again or email me directly.",
+        style: { background: '#111', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }
+      });
+    }
   };
 
   return (

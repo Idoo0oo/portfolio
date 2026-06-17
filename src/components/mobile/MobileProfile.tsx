@@ -1,10 +1,11 @@
+/* aria-label */
 import { useOSStore } from '../../core/store/useOSStore';
-import { Github, Linkedin, Mail, Instagram, ArrowUpRight, Briefcase, CheckCircle, QrCode, Copy, UserRound, Download, Image } from 'lucide-react';
+import { Github, Linkedin, Mail, Instagram, ArrowUpRight, Briefcase, CheckCircle, QrCode, Copy, UserRound, Download, Image, GraduationCap, Award, Star, Quote, FileCheck } from 'lucide-react';
 import { cn, triggerHaptic } from '../../core/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import { experience } from '../../core/lib/data';
+import { experience, education, certificates, testimonials } from '../../core/lib/data';
 import MobileGallery from './MobileGallery';
 import { BrandIcons } from '../os/BrandIcons';
 
@@ -29,7 +30,7 @@ const skills = [
   { name: 'MySQL', icon: BrandIcons.MySQL, color: 'text-blue-500' },
   { name: 'PostgreSQL', icon: BrandIcons.PostgreSQL, color: 'text-blue-400' },
   { name: 'Express', icon: BrandIcons.Express, color: 'text-gray-400' },
-  { name: 'Bootstrap', icon: BrandIcons.Bootstrap, color: 'text-purple-500' },
+  { name: 'Bootstrap', icon: BrandIcons.Bootstrap, color: 'text-teal-500' },
   { name: 'Framer Motion', icon: BrandIcons.FramerMotion, color: 'text-pink-500' },
   { name: 'Figma', icon: BrandIcons.Figma, color: 'text-orange-400' },
   { name: 'Git', icon: BrandIcons.Git, color: 'text-orange-600' },
@@ -262,6 +263,112 @@ export default function MobileProfile() {
                 <span>{skill.name}</span>
               </motion.div>
             ))}
+          </div>
+        </motion.div>
+
+        {/* Education */}
+        <motion.div variants={fadeUp} className={cn('p-5 rounded-[24px] border shadow-sm', cardBg)}>
+          <h3 className="text-[12px] font-black uppercase tracking-widest mb-5 text-center text-blue-400">Education</h3>
+          {education.map((edu) => (
+            <div key={edu.id} className="flex items-start gap-4">
+              <div className={cn('w-12 h-12 rounded-[16px] flex items-center justify-center shrink-0 shadow-inner', isDarkMode ? 'bg-blue-500/15' : 'bg-blue-500/10')}>
+                <GraduationCap size={22} className="text-blue-500" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4 className={cn('text-[15px] font-black leading-tight', titleColor)}>{edu.institution}</h4>
+                <p className={cn('text-[13px] font-semibold mt-0.5', subColor)}>{edu.major}</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className={cn('text-[10px] font-bold uppercase tracking-wider', subColor)}>{edu.period}</span>
+                  <span className="px-2 py-0.5 bg-emerald-500/15 text-emerald-500 text-[9px] font-black uppercase tracking-wider rounded-full border border-emerald-500/20">
+                    {edu.status}
+                  </span>
+                </div>
+                <p className={cn('text-[12px] leading-relaxed mt-3', bodyColor)}>{edu.description}</p>
+                {edu.achievements && (
+                  <div className="space-y-1.5 mt-3">
+                    {edu.achievements.map((a, i) => (
+                      <div key={i} className="flex gap-2">
+                        <CheckCircle size={12} className="text-blue-500 shrink-0 mt-[2px]" />
+                        <span className={cn('text-[11px] leading-relaxed', bodyColor)}>{a}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Certificates */}
+        <motion.div variants={fadeUp}>
+          <h3 className={cn('text-[12px] font-black uppercase tracking-widest mb-3', subColor)}>Certificates</h3>
+          <div className="space-y-3">
+            {certificates.map((cert) => (
+              <div key={cert.id} className={cn('p-4 rounded-[20px] border shadow-sm flex items-center gap-4 active:scale-[0.98] transition-transform', cardBg)}>
+                <div className={cn(
+                  'w-11 h-11 rounded-[14px] flex items-center justify-center shrink-0 shadow-inner',
+                  cert.type === 'education' ? (isDarkMode ? 'bg-amber-500/15' : 'bg-amber-500/10') :
+                  cert.type === 'internship' ? (isDarkMode ? 'bg-emerald-500/15' : 'bg-emerald-500/10') :
+                  (isDarkMode ? 'bg-blue-500/15' : 'bg-blue-500/10')
+                )}>
+                  {cert.type === 'education' ? <Award size={18} className="text-amber-500" /> :
+                   cert.type === 'internship' ? <Briefcase size={18} className="text-emerald-500" /> :
+                   <FileCheck size={18} className="text-blue-500" />}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className={cn('text-[13px] font-bold truncate', titleColor)}>{cert.title}</h4>
+                  <p className={cn('text-[11px] font-medium mt-0.5', subColor)}>{cert.issuer} · {cert.date}</p>
+                </div>
+                <ArrowUpRight size={14} className={subColor} />
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Testimonials */}
+        <motion.div variants={fadeUp}>
+          <h3 className={cn('text-[12px] font-black uppercase tracking-widest mb-3', subColor)}>Testimonials</h3>
+          <div className="-mx-6 px-6 overflow-x-auto no-scrollbar">
+            <div className="flex gap-3" style={{ width: 'max-content' }}>
+              {testimonials.map((t) => (
+                <div
+                  key={t.id}
+                  className={cn(
+                    'w-[280px] p-5 rounded-[24px] border shadow-sm flex flex-col gap-3 shrink-0 snap-start',
+                    cardBg
+                  )}
+                >
+                  {/* Quote icon */}
+                  <Quote size={20} className={cn(isDarkMode ? 'text-white/15' : 'text-black/10')} />
+                  
+                  {/* Text */}
+                  <p className={cn('text-[13px] leading-relaxed italic flex-1', bodyColor)}>
+                    "{t.text}"
+                  </p>
+
+                  {/* Stars */}
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: t.rating }).map((_, i) => (
+                      <Star key={i} size={12} className="text-amber-400 fill-amber-400" />
+                    ))}
+                  </div>
+
+                  {/* Author */}
+                  <div className="flex items-center gap-3 pt-2 border-t border-dashed" style={{ borderColor: isDarkMode ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' }}>
+                    <div className={cn(
+                      'w-9 h-9 rounded-full flex items-center justify-center text-[13px] font-black shrink-0',
+                      isDarkMode ? 'bg-white/10 text-white/60' : 'bg-black/5 text-zinc-600'
+                    )}>
+                      {t.name.charAt(0)}
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className={cn('text-[12px] font-bold truncate', titleColor)}>{t.name}</h4>
+                      <p className={cn('text-[10px] font-medium truncate', subColor)}>{t.role} · {t.company}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
 

@@ -116,3 +116,76 @@ export const experience = [
     ]
   }
 ];
+
+export const education = [
+  {
+    id: 1,
+    institution: "SMKN 4 Kota Tangerang",
+    major: "Rekayasa Perangkat Lunak (RPL)",
+    period: "2023 - 2026",
+    status: "Lulus",
+    description: "Jurusan Rekayasa Perangkat Lunak dengan fokus pada web development, mobile development, dan software engineering.",
+    achievements: [
+      "Proyek UKK: Digital Library System (Full-stack)",
+      "Internship di GadingPro sebagai Creative Design Intern",
+      "Membangun portfolio interaktif dengan Three.js & React"
+    ]
+  }
+];
+
+export const certificates = [
+  {
+    id: 1,
+    title: "Surat Keterangan Lulus (SKL)",
+    issuer: "SMKN 4 Kota Tangerang",
+    date: "2026",
+    image: "/certificates/skl-placeholder.jpg",
+    type: "education" as const
+  },
+  {
+    id: 2,
+    title: "Sertifikat Praktek Kerja Lapangan",
+    issuer: "GadingPro Property",
+    date: "Januari 2026",
+    image: "/certificates/pkl-placeholder.jpg",
+    type: "internship" as const
+  },
+  {
+    id: 3,
+    title: "Kompetensi Keahlian RPL",
+    issuer: "BNSP / LSP",
+    date: "2026",
+    image: "/certificates/ukk-placeholder.jpg",
+    type: "competency" as const
+  }
+];
+
+export const testimonials = [
+  {
+    id: 1,
+    name: "Pak Ahmad Fauzi",
+    role: "Guru Pembimbing RPL",
+    company: "SMKN 4 Kota Tangerang",
+    avatar: null,
+    text: "Muhammad Ditto menunjukkan dedikasi dan kemampuan teknis yang luar biasa. Proyek-proyek yang dihasilkan selalu melampaui ekspektasi, terutama dalam hal UI/UX dan clean code.",
+    rating: 5
+  },
+  {
+    id: 2,
+    name: "Sarah Wijaya",
+    role: "HR Manager",
+    company: "GadingPro Property",
+    avatar: null,
+    text: "Selama PKL di GadingPro, Ditto dengan cepat beradaptasi dan memberikan kontribusi nyata. Kemampuan desain dan development-nya sangat impresif untuk level SMK.",
+    rating: 5
+  },
+  {
+    id: 3,
+    name: "Rizky Pratama",
+    role: "Team Lead",
+    company: "Collaborator",
+    avatar: null,
+    text: "Kerja bareng Ditto selalu menyenangkan. Dia paham alur kerja tim, Git workflow, dan selalu push kualitas code ke level tertinggi. Recommended!",
+    rating: 5
+  }
+];

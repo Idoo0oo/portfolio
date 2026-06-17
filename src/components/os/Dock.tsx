@@ -84,7 +84,7 @@ export default function MacOSDock() {
             onMouseEnter={() => playSound('hover', 0.2)}
             animate={bouncingApp === 'dashboard' ? bounceAnimate : {}}
             transition={bouncingApp === 'dashboard' ? bounceTransition : undefined}
-            className="w-full h-full rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center cursor-pointer shadow-lg hover:brightness-110 transition-all duration-200"
+            className="w-full h-full rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-600 flex items-center justify-center cursor-pointer shadow-lg hover:brightness-110 transition-all duration-200"
           >
             <LayoutGrid size={24} className="text-white" />
             {tooltip('Dashboard')}

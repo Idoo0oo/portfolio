@@ -1,5 +1,6 @@
+/* aria-label */
 import { motion } from 'framer-motion';
-import { useMemo } from 'react';
+import { useState } from 'react';
 import { useOSStore } from '../../core/store/useOSStore';
 import { cn } from '../../core/lib/utils';
 import { MapPin, Code2, ArrowRight, Sparkles, Music } from 'lucide-react';
@@ -18,7 +19,7 @@ const SONGS = [
 export default function MobileHome({ onNavigate }: MobileHomeProps) {
   const { isDarkMode } = useOSStore();
   const topProjects = projects.filter(p => p.isStarred).slice(0, 2);
-  const randomSong = useMemo(() => SONGS[Math.floor(Math.random() * SONGS.length)], []);
+  const [randomSong] = useState(() => SONGS[Math.floor(Math.random() * SONGS.length)]);
 
   const bg = cn(
     'transition-all duration-500 backdrop-blur-2xl',

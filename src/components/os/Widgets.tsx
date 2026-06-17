@@ -8,8 +8,10 @@ import {
   Calendar as CalendarIcon,
   Code2,
   ExternalLink,
-  ClipboardCheck
+  ClipboardCheck,
+  Eye,
 } from "lucide-react";
+import { useVisitorCount } from '../../core/hooks/useVisitorCount';
 
 export default function Widgets() {
   const isWidgetsOpen = useOSStore((state) => state.isWidgetsOpen);
@@ -174,11 +176,56 @@ export default function Widgets() {
                   </a>
                 </div>
               </div>
+
+              {/* Visitor Stats Widget */}
+              <div className={cn(
+                "rounded-2xl p-4 border shadow-xl",
+                isDarkMode ? "bg-white/5 border-white/5" : "bg-black/5 border-black/5"
+              )}>
+                <VisitorWidget isDarkMode={isDarkMode} />
+              </div>
             </div>
             </div>
           </motion.div>
         </>
       )}
     </AnimatePresence>
+  );
+}
+
+function VisitorWidget({ isDarkMode }: { isDarkMode: boolean }) {
+  const { totalVisitors, todayVisitors, isLoading } = useVisitorCount();
+
+  return (
+    <>
+      <div className="flex items-center gap-2 mb-3">
+        <Eye size={18} className="text-emerald-400" />
+        <span className={cn("text-sm font-bold", isDarkMode ? "text-white" : "text-zinc-900")}>Visitors</span>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <div className={cn(
+          "p-2 rounded-lg text-center",
+          isDarkMode ? "bg-white/10" : "bg-black/10"
+        )}>
+          <p className={cn("text-lg font-black tabular-nums", isDarkMode ? "text-white" : "text-zinc-900")}>
+            {isLoading ? "—" : totalVisitors.toLocaleString()}
+          </p>
+          <p className={cn("text-[9px] font-bold uppercase tracking-wider mt-0.5", isDarkMode ? "text-white/40" : "text-zinc-500")}>
+            Total
+          </p>
+        </div>
+        <div className={cn(
+          "p-2 rounded-lg text-center",
+          isDarkMode ? "bg-white/10" : "bg-black/10"
+        )}>
+          <p className={cn("text-lg font-black tabular-nums", isDarkMode ? "text-white" : "text-zinc-900")}>
+            {isLoading ? "—" : todayVisitors.toLocaleString()}
+          </p>
+          <p className={cn("text-[9px] font-bold uppercase tracking-wider mt-0.5", isDarkMode ? "text-white/40" : "text-zinc-500")}>
+            Today
+          </p>
+        </div>
+      </div>
+    </>
   );
 }

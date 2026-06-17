@@ -18,6 +18,7 @@ export function triggerHaptic() {
   // 2. iOS fallback: Psycho-acoustic muted tick sound via Web Audio API
   try {
     if (!audioCtx) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
       if (AudioContextClass) {
         audioCtx = new AudioContextClass();
@@ -48,7 +49,7 @@ export function triggerHaptic() {
       oscillator.start(audioCtx.currentTime);
       oscillator.stop(audioCtx.currentTime + 0.015);
     }
-  } catch (err) {
+  } catch {
     // silently fail
   }
 }

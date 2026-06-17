@@ -1,3 +1,4 @@
+/* aria-label */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -196,7 +197,7 @@ export default function Dashboard() {
              onClick={() => window.open('https://open.spotify.com/', '_blank')}
              className="lg:col-span-2 p-6 bg-white/[0.03] border border-white/5 rounded-3xl flex items-center gap-6 hover:bg-white/[0.05] transition-all group cursor-pointer overflow-hidden relative min-h-[140px]"
           >
-             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-teal-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
              
              {/* Album Art */}
              <div className="relative w-24 h-24 flex-shrink-0 shadow-2xl group-hover:scale-105 transition-transform duration-500">
@@ -222,7 +223,7 @@ export default function Dashboard() {
                          initial={{ x: "-100%" }}
                          animate={{ x: "-30%" }}
                          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                         className="h-full bg-gradient-to-r from-purple-500 to-blue-500" 
+                         className="h-full bg-gradient-to-r from-teal-500 to-blue-500" 
                       />
                    </div>
                    <div className="flex justify-between items-center px-0.5">

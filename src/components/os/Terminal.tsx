@@ -238,6 +238,7 @@ export default function Terminal() {
       <div className="flex text-[var(--color-accent)] mt-2 border-t border-white/5 pt-2">
         <span className="mr-2 opacity-60 shrink-0">guest@ido-mac:~$</span>
         <input
+          aria-label="Terminal input"
           ref={inputRef}
           type="text"
           value={input}

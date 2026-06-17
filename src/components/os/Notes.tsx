@@ -261,7 +261,7 @@ export default function Notes() {
                         </div>
                         <div className="hidden sm:block w-px h-10 bg-white/5" />
                         <div className="flex items-center gap-3 group cursor-default max-w-[300px]">
-                            <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/10 transition-transform group-hover:scale-110">
+                            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 border border-cyan-500/10 transition-transform group-hover:scale-110">
                                 <Code size={20} />
                             </div>
                             <div>

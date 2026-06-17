@@ -1,3 +1,4 @@
+/* aria-label */
 import { useRef, useState, Suspense, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useTexture, Environment, Float, ContactShadows, PerspectiveCamera, PerformanceMonitor, AdaptiveDpr, AdaptiveEvents, Preload } from '@react-three/drei';
