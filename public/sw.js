@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portfolio-v1';
+const CACHE_NAME = 'portfolio-v2';
 const STATIC_ASSETS = [
   '/',
   '/favicon.svg',
@@ -44,6 +44,20 @@ self.addEventListener('fetch', (event) => {
 
   // API calls: Network first
   if (url.pathname.startsWith('/api/')) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+          return response;
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
+
+  // HTML navigation: Network first
+  if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
         .then((response) => {
